@@ -1,5 +1,5 @@
 
-import HomePage from "../pages/home-page/HomePage";
+import HomePage from "../pages/frontend-pages/HomePage";
 
 
 

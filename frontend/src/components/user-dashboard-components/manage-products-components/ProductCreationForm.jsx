@@ -15,8 +15,11 @@ export default function ProductCreationForm() {
 
   const [formData, setFormData] = useState({
     title: "",
+    price: "",
     description: "",
     location: null, // Dropdown value
+    condition: null, // Dropdown value
+    weight: null, // Dropdown value
     category: null, // Dropdown value
     subcategory: null, // Dropdown value
     images: [], // Array of images
@@ -26,6 +29,10 @@ export default function ProductCreationForm() {
     { value: "New York", label: "New York" },
     { value: "San Francisco", label: "San Francisco" },
     { value: "Los Angeles", label: "Los Angeles" },
+  ];
+  const conditionOptions = [
+    { value: "new", label: "New" },
+    { value: "used", label: "Used" },
   ];
 
   const categoryOptions = [
@@ -56,6 +63,9 @@ export default function ProductCreationForm() {
   const handleLocationChange = (selectedOption) => {
     setFormData({ ...formData, location: selectedOption });
   };
+  const handleConditionChange = (selectedOption) => {
+    setFormData({ ...formData, condition: selectedOption });
+  };
 
   const handleCategoryChange = (selectedOption) => {
     setFormData((prevData) => ({
@@ -83,21 +93,56 @@ export default function ProductCreationForm() {
     }));
   };
 
+  const validateForm = () => {
+    const { title, description, location, category, images, price, condition, weight } = formData;
+
+    if (!title || !description || !location || !category || !price || !condition || !weight) {
+      toast.error("All fields are required!");
+      return false;
+    }
+
+    if (images.length === 0) {
+      toast.error("Please upload at least one image!");
+      return false;
+    }
+
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB per image
+    for (let image of images) {
+      if (!image.type.startsWith("image/")) {
+        toast.error("Only image files are allowed!");
+        return false;
+      }
+
+      if (image.size > maxSizeInBytes) {
+        toast.error("Each image size should not exceed 5MB!");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("description", formData.description);
-    data.append("location", formData.location?.value || "");
-    data.append("category", formData.category?.value || "");
-    data.append("subCategory", formData.subcategory?.value || "");
 
-    // Append images to the FormData object
-    formData.images.forEach((image) => {
-      data.append("images", image);
-    });
+    if (validateForm()) {
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("price", formData.price);
+      data.append("description", formData.description);
+      data.append("location", formData.location?.value || "");
+      data.append("weight", formData.weight || "");
+      data.append("condition", formData.condition?.value || "");
+      data.append("category", formData.category?.value || "");
+      data.append("subCategory", formData.subcategory?.value || "");
 
-    dispatch(productPost(data));
+      // Append images to the FormData object
+      formData.images.forEach((image) => {
+        data.append("images", image);
+      });
+
+      dispatch(productPost(data));
+    }
   };
 
   useEffect(() => {
@@ -125,10 +170,10 @@ export default function ProductCreationForm() {
                 name: "Manage Products",
                 path: "/user-dashboard/manage-product",
               },
-                {
-                  name: "Add Products",
-                  // path: "/admin-dashboard/manage-companies/add-company",
-                },
+              {
+                name: "Add Products",
+                // path: "/admin-dashboard/manage-companies/add-company",
+              },
             ]}
           />
         </div>
@@ -166,6 +211,33 @@ export default function ProductCreationForm() {
                 className="bg-[#FAFAFA] text-xs font-normal text-[#6B6B6B] rounded-lg w-full py-2 px-2 border border-[#EBF0ED] outline-none"
                 placeholder="Enter product description"
                 rows="3"
+              />
+            </div>
+
+            <div>
+              <label className="text-[#6B6B6B] text-[12px] font-semibold">
+                Condition
+              </label>
+              <Select
+                name="condition"
+                value={formData.condition}
+                onChange={handleConditionChange}
+                options={conditionOptions}
+                className="text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="text-[#6B6B6B] text-[12px] font-semibold">
+                Weight (in grams)
+              </label>
+              <input
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+                className="bg-[#FAFAFA] text-xs font-normal text-[#6B6B6B] rounded-lg w-full py-2 px-2 border border-[#EBF0ED] outline-none"
+                type="text"
+                placeholder="Enter product weight in grams"
               />
             </div>
 
@@ -212,6 +284,20 @@ export default function ProductCreationForm() {
                 />
               </div>
             )}
+
+            <div>
+              <label className="text-[#6B6B6B] text-[12px] font-semibold">
+                Price
+              </label>
+              <input
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="bg-[#FAFAFA] text-xs font-normal text-[#6B6B6B] rounded-lg w-full py-2 px-2 border border-[#EBF0ED] outline-none"
+                type="text"
+                placeholder="Enter product price"
+              />
+            </div>
 
             {/* Image Upload */}
             <div>
@@ -265,7 +351,11 @@ export default function ProductCreationForm() {
               type="submit"
               className="text-white bg-yellow-500 hover:opacity-75 text-xs h-10 font-semibold py-2 px-3 rounded-lg"
             >
-              Add Product
+              {!loading ? (
+                "Add Product"
+              ) : (
+                <span className="loading loading-spinner loading-md"></span>
+              )}
             </button>
           </div>
         </form>

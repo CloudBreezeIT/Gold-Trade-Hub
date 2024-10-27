@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from './userSlice'
+import frontendReducer from "./frontendSlice";
+
 
 
 const store = configureStore({
     reducer: {
-        user: userReducer // Using the reducer directly
+        user: userReducer,
+        frontend:frontendReducer
     }
 });
 

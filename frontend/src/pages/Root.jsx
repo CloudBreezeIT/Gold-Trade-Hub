@@ -8,6 +8,8 @@ export default function Root() {
   return (
     <>
       <main>
+      <Navbar />
+
         <div className="flex w-full flex-col">
           <ToastContainer
             position="top-right"

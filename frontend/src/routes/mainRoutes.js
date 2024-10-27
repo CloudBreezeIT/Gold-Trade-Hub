@@ -4,6 +4,7 @@ import homePageRoutes from "./homePageRoutes";
 import authRoutes from "./authRoutes";
 import ProtectedRoute from "../ProtectedRoute";
 import userDashboardRoutes from "./userDashboardRoutes";
+import singleProductRoute from "./singleProductRoute";
 
 
 const mainRoutes = [
@@ -13,6 +14,7 @@ const mainRoutes = [
     children: [
         ...homePageRoutes,
         ...authRoutes,
+        ...singleProductRoute,
         {
           path: "/user-dashboard/",
           element: <ProtectedRoute />, // Protect this route and its children
