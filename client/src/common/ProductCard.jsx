@@ -1,31 +1,48 @@
 import React, { useState } from "react";
-import { stringConcat } from "../functions/helperFuntions";
+import { formatNumber, stringConcat } from "../functions/helperFuntions";
 import { Link } from "react-router-dom";
-import { FiShoppingCart } from "react-icons/fi"; // Import cart icon from react-icons
-import { IoClose } from "react-icons/io5"; // Import close icon from react-icons
+import { FiHeart } from "react-icons/fi"; // Import wishlist icon from react-icons
 import { toast } from "react-toastify";
 import { postRequest } from "../Requests/Request"; // Import postRequest from Request.js
 
 export default function ProductCard({ item }) {
-  const [showPopup, setShowPopup] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false); // Track wishlist state
   const [cartResponse, setCartResponse] = useState(null);
 
-  const handleAddToCart = async (id) => {
+  const handleAddToWishlist = async (id) => {
     try {
-      const response = await postRequest("/product/add-to-cart", { productId: id });
-      console.log("add to cart response" , response)
+      const response = await postRequest("/product/add-to-cart", {
+        productId: id,
+      });
+      console.log("add to wishlist response", response);
       setCartResponse(response);
-      toast.success(response?.message || "Item added to cart successfully!");
-      setShowPopup(false);
+      setIsWishlisted(!isWishlisted); // Toggle wishlist state
+      toast.success(response?.message);
     } catch (error) {
-      toast.error("Failed to add item to cart");
-      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to wishlist");
+      console.error("Error adding to wishlist:", error);
     }
   };
 
   return (
     <>
-      <div className="relative border w-[140px] md:w-[180px] xl:w-[220px]  shadow-md transition-shadow hover:shadow-lg overflow-hidden">
+      <div className="relative border w-[140px] md:w-[180px] xl:w-[220px] shadow-md transition-shadow hover:shadow-lg overflow-hidden">
+        {/* Wishlist Icon - Positioned in the top-right corner */}
+        <div className="absolute top-2 right-2 z-10">
+          <button
+            onClick={() => handleAddToWishlist(item._id)}
+            className="focus:outline-none"
+          >
+            <FiHeart
+              className={`w-6 h-6 ${
+                isWishlisted
+                  ? "text-yellow-500 fill-yellow-500"
+                  : "text-yellow-500"
+              } cursor-pointer`}
+            />
+          </button>
+        </div>
+
         <Link to={`/${item.slug}`}>
           <div className="relative overflow-hidden">
             {item?.images[0] && (
@@ -39,37 +56,25 @@ export default function ProductCard({ item }) {
         </Link>
 
         <Link to={`/${item.slug}`} className="p-2 flex flex-col gap-1">
-          <h2 className="font-semibold text-[10px] md:text-xs xl:text-sm line-clamp-2 capitalize">
+          <h2 className="font-normal text-[10px] md:text-xs xl:text-[14px] line-clamp-2 capitalize">
             {item.title}
           </h2>
 
-          <div className="flex items-center justify-between text-[8px] md:text-[9px] xl:text-[10px] text-gray-500 space-x-1">
+          <div className="flex items-center justify-between text-[8px] md:text-[9px] xl:text-[10px] text-gray-500 space-x-1 mt-1">
             <div>
-              <span className="bg-blue-100 text-blue-500 px-1 py-0.5 rounded-full">
+              <span className="bg-blue-100 text-blue-500 px-1 py-0.5 rounded">
                 {item.category}
               </span>
-              <span className="bg-gray-100 text-gray-600 px-1 py-0.5 rounded-full">
-                {item.subCategory}
-              </span>
-            </div>
-            <div
-              className="relative flex justify-end"
-              // onClick={(event) => {
-              //   event.stopPropagation(); 
-              //   setShowPopup(true);
-              // }}
-            >
-              <FiShoppingCart className="text-black w-4 h-4 mr-1 cursor-pointer" />
             </div>
           </div>
 
           <div className="text-[8px] md:text-[9px] xl:text-[10px] text-gray-500">
-            {item.location} - {item.date}
+            {item.location} {item.date ? "-" : ""} {item.date}
           </div>
 
           <div className="flex justify-between items-center mt-1">
-            <div className="text-base md:text-md font-semibold text-black">
-              Rs.{item.price}.00
+            <div className="text-base md:text-lg font-normal text-yellow-500">
+              Rs. {item.price > 100000 ? formatNumber(item.price) : item.price}
             </div>
             <div className="flex flex-col items-end text-[8px] md:text-[9px] xl:text-[10px] text-gray-600">
               <span className="font-medium">Condition: {item.condition}</span>
@@ -78,14 +83,12 @@ export default function ProductCard({ item }) {
           </div>
 
           {item.description && (
-            <p className="text-[8px] md:text-[9px] xl:text-[10px] text-gray-600 line-clamp-2 mt-1">
+            <p className="text-[8px] md:text-[9px] xl:text-[12px] text-gray-600 line-clamp-2 mt-1">
               {stringConcat(item.description, 40)}
             </p>
           )}
         </Link>
       </div>
-
-    
     </>
   );
 }

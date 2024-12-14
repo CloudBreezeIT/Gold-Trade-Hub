@@ -56,7 +56,7 @@ const SearchPage = () => {
               <SidebarFilter />
             </div>
 
-            <div className="w-[75%] flex flex-wrap justify-between items-center">
+            <div className="w-[75%] flex flex-wrap gap-3 items-start">
               {loading ? (
                 <p className="text-center mx-auto">Loading products...</p>
               ) : products.length > 0 ? (
