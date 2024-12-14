@@ -18,10 +18,10 @@ export default function SignupPage() {
   const [message, setMessage] = useState("");
 
   // Location options
-  const locationOptions = districts.map((district) => ({
-    value: district,
-    label: district,
-  }));
+  // const locationOptions = districts.map((district) => ({
+  //   value: district,
+  //   label: district,
+  // }));
 
   // for password visibility
   const togglePasswordVisibility = () => {

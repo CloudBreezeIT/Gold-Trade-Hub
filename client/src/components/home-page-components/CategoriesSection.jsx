@@ -26,21 +26,23 @@ const CategoriesSection = ({ data }) => {
           {data &&
             data?.map((category, index) => (
               <>
-                <div className="bg-white p-6 border hover:border-white cursor-pointer m-1 transform hover:shadow-lg  transition duration-300">
-                  {/* Category Image */}
-                  <div className="flex items-center justify-center mb-4">
-                    <img
-                      src={category.image}
-                      alt={category.label}
-                      className="w-16 h-16 object-cover "
-                    />
-                  </div>
+                <Link to={`search?q=${category.label}`}>
+                  <div className="bg-white p-6 border hover:border-white cursor-pointer m-1 transform hover:shadow-lg  transition duration-300">
+                    {/* Category Image */}
+                    <div className="flex items-center justify-center mb-4">
+                      <img
+                        src={category.image}
+                        alt={category.label}
+                        className="w-16 h-16 object-cover "
+                      />
+                    </div>
 
-                  {/* Category Label */}
-                  <h3 className="text-center text-lg font-medium text-gray-700">
-                    {category.label}
-                  </h3>
-                </div>
+                    {/* Category Label */}
+                    <h3 className="text-center text-lg font-medium text-gray-700">
+                      {category.label}
+                    </h3>
+                  </div>
+                </Link>
               </>
             ))}
         </div>
