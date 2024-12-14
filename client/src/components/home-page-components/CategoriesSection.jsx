@@ -27,7 +27,13 @@ const CategoriesSection = ({ data }) => {
             data?.map((category, index) => (
               <>
                 <Link to={`search?q=${category.label}`}>
-                  <div className="bg-white p-6 border hover:border-white cursor-pointer m-1 transform hover:shadow-lg  transition duration-300">
+                  <div
+                    className="bg-white  p-6 border hover:border-white cursor-pointer  transform hover:shadow-catCardShadow transition duration-300 "
+                    // style={{
+                    //   boxShadow: "0 2px 4px 0 rgba(0,0,0,.25)",
+                    //   hover: { boxShadow: "0 2px 4px 0 rgba(0,0,0,.25)" },
+                    // }}
+                  >
                     {/* Category Image */}
                     <div className="flex items-center justify-center mb-4">
                       <img
@@ -38,7 +44,7 @@ const CategoriesSection = ({ data }) => {
                     </div>
 
                     {/* Category Label */}
-                    <h3 className="text-center text-lg font-medium text-gray-700">
+                    <h3 className="text-center text-[14px] font-normal text-gray-700">
                       {category.label}
                     </h3>
                   </div>

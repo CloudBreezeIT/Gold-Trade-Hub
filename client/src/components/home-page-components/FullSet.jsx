@@ -25,7 +25,7 @@ const FullSet = () => {
           </h2>
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-9 xl:gap-7 px-4 lg:px-8  xl:px-[67px]">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 lg:px-8 xl:px-[67px]">
         {data &&
           data?.slice(0, 4).map((product) => (
             <div

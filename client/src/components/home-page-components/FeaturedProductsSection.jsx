@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getRequest } from "../../Requests/Request";
 import ProductCard from "../../common/ProductCard";
 
-const TopProductsSection = () => {
+const FeaturedProductsSection = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const TopProductsSection = () => {
         {/* Section Header */}
         <div className="mb-5">
           <h2 className="text-2xl text-gray-800 relative">
-            Our Collection
+            Featured Products
             <span className="absolute -bottom-2 left-0 w-[7%] h-[0.145rem] bg-yellow-500 rounded-full"></span>
           </h2>
         </div>
@@ -33,7 +33,7 @@ const TopProductsSection = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 lg:px-8 xl:px-[67px]">
-        {allProducts.map((product) => (
+        {allProducts.slice(-5).map((product) => (
           <div className="flex-none" key={product._id}>
             <ProductCard item={product} />
           </div>
@@ -43,4 +43,4 @@ const TopProductsSection = () => {
   );
 };
 
-export default TopProductsSection;
+export default FeaturedProductsSection;

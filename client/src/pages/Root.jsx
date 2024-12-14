@@ -8,7 +8,7 @@ import MainSearchBar from "../common/MainSearchBar";
 export default function Root() {
   return (
     <>
-      <main>
+      <main className="bg-[#f5f5f5]">
         <Navbar />
         <MainSearchBar />
         <div className="flex w-full flex-col">

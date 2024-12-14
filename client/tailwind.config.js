@@ -11,7 +11,12 @@ module.exports = {
           usetheme: "#eab308",
         },
 
+
       },
+      boxShadow: {
+        catCardShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.25)",
+        productCardShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.25)"
+      }
     },
   },
   plugins: [
@@ -21,4 +26,3 @@ module.exports = {
     themes: [],
   },
 }
-

@@ -5,6 +5,7 @@ import TopProductsSection from "../../components/home-page-components/TopProduct
 import { getRequest } from "../../Requests/Request";
 import FullSet from "../../components/home-page-components/FullSet";
 import Footer from "../../components/Footer";
+import FeaturedProductsSection from "../../components/home-page-components/FeaturedProductsSection";
 
 export default function HomePage() {
   const [homeProducts, setHomeProducts] = useState([]);
@@ -38,6 +39,7 @@ export default function HomePage() {
     <>
       <MainHeroSection />
       <CategoriesSection data={categories} />
+      <FeaturedProductsSection />
       <FullSet />
       <TopProductsSection homeData={homeProducts} />
       <Footer />
