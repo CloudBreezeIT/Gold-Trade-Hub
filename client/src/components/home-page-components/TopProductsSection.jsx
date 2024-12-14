@@ -3,17 +3,21 @@ import { AiOutlineRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ProductCard from "../../common/ProductCard";
 
-
-const TopProductsSection = ({homeData}) => {
-
+const TopProductsSection = ({ homeData }) => {
   return (
-    <div className="px-4 lg:px-8 mt-10 xl:px-[67px] flex flex-col gap-8">
-                  <h1 className="font-bold text-md md:text-2xl">Recently Added</h1>
+    <div className="px-4 lg:px-8 mt-16 xl:px-[67px] flex flex-col gap-8">
+      <div className="">
+        <h2 className="text-2xl text-gray-800 relative">
+          Recently Added
+          <span className="absolute -bottom-2 left-0 w-[7%] h-[0.145rem] bg-yellow-500 rounded-full"></span>
+        </h2>
+      </div>
 
-      {homeData?.map((item) => (
-        item?.products?.length > 0 && (
-          <div key={item.id} className="flex flex-col gap-3">
-            {/* <div className="flex justify-between items-center">
+      {homeData?.map(
+        (item) =>
+          item?.products?.length > 0 && (
+            <div key={item.id} className="flex flex-col gap-3">
+              {/* <div className="flex justify-between items-center">
               <h2 className="font-bold text-md md:text-2xl">
                 {item.category}
               </h2>
@@ -25,21 +29,21 @@ const TopProductsSection = ({homeData}) => {
               </Link>
             </div> */}
 
-            {/* Product Cards Section */}
-            <div className="flex flex-wrap items-center gap-9 xl:gap-7">
-              {item.products.slice(0, 4).map((product) => (
-                <div
-                  // to={`/${product.slug}`}
-                  className="flex-none"
-                  key={product._id}
-                >
-                  <ProductCard item={product} />
-                </div>
-              ))}
+              {/* Product Cards Section */}
+              <div className="flex flex-wrap items-center gap-9 xl:gap-7">
+                {item.products.slice(0, 3).map((product) => (
+                  <div
+                    // to={`/${product.slug}`}
+                    className="flex-none"
+                    key={product._id}
+                  >
+                    <ProductCard item={product} />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )
-      ))}
+          )
+      )}
     </div>
   );
 };

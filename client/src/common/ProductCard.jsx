@@ -25,9 +25,9 @@ export default function ProductCard({ item }) {
 
   return (
     <>
-      <div className="relative border w-[140px] md:w-[180px] xl:w-[220px] rounded-lg shadow-md transition-shadow hover:shadow-lg overflow-hidden">
+      <div className="relative border w-[140px] md:w-[180px] xl:w-[220px]  shadow-md transition-shadow hover:shadow-lg overflow-hidden">
         <Link to={`/${item.slug}`}>
-          <div className="relative overflow-hidden rounded-t-lg">
+          <div className="relative overflow-hidden">
             {item?.images[0] && (
               <img
                 src={item?.images[0] || `/assets/images/alt-img.webp`}
@@ -39,8 +39,8 @@ export default function ProductCard({ item }) {
         </Link>
 
         <Link to={`/${item.slug}`} className="p-2 flex flex-col gap-1">
-          <h2 className="font-semibold text-[10px] md:text-xs xl:text-sm line-clamp-1">
-            {stringConcat(item.title, 18)}
+          <h2 className="font-semibold text-[10px] md:text-xs xl:text-sm line-clamp-2 capitalize">
+            {item.title}
           </h2>
 
           <div className="flex items-center justify-between text-[8px] md:text-[9px] xl:text-[10px] text-gray-500 space-x-1">
