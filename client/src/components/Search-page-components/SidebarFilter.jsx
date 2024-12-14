@@ -10,23 +10,23 @@ const SidebarFilter = ({ setSubCategory }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSubCategories = async () => {
-      try {
-        // Update this URL as needed to match your actual API endpoint
-        const response = await getRequest(`/subCategory/get/${category}`);
-        setSubCategories(response.body || []);
-      } catch (error) {
-        console.error("Error fetching subcategories:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchSubCategories = async () => {
+  //     try {
+  //       // Update this URL as needed to match your actual API endpoint
+  //       const response = await getRequest(`/subCategory/get/${category}`);
+  //       setSubCategories(response.body || []);
+  //     } catch (error) {
+  //       console.error("Error fetching subcategories:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    if (category) {
-      fetchSubCategories();
-    }
-  }, [category]);
+  //   if (category) {
+  //     fetchSubCategories();
+  //   }
+  // }, [category]);
 
   const handleSetCategory = (subCategory) => {
     setSubCategory(subCategory);
