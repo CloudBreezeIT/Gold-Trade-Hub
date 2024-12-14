@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ConfirmationPopup from "../../common/ConfirmationPopup";
 import { toast } from "react-toastify";
-import { getRequest, postRequest } from '../../Requests/Request';  // Assuming `postRequest` is defined in your `request.js` file
+import { getRequest, postRequest } from "../../Requests/Request"; // Assuming `postRequest` is defined in your `request.js` file
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FiShoppingCart } from "react-icons/fi";
@@ -23,6 +23,27 @@ const SingleProductOverview = () => {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [selectedSellerId, setSelectedSellerId] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const description = `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo cum
+    delectus magnam alias consectetur dolore blanditiis ea accusantium
+    laborum, quaerat sit quia earum dolorem reiciendis distinctio fugiat
+    atque maxime asperiores corrupti quam commodi in laudantium! Sunt
+    iste ex incidunt sed! Lorem ipsum dolor sit amet consectetur
+    adipisicing elit. Illum eius magnam earum aliquid necessitatibus
+    laboriosam.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo cum
+    delectus magnam alias consectetur dolore blanditiis ea accusantium
+    laborum, quaerat sit quia earum dolorem reiciendis distinctio fugiat
+    atque maxime asperiores corrupti quam commodi in laudantium! Sunt
+    iste ex incidunt sed! Lorem ipsum dolor sit amet consectetur
+    adipisicing elit. Illum eius magnam earum aliquid necessitatibus
+    laboriosam.
+    `;
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
@@ -42,12 +63,14 @@ const SingleProductOverview = () => {
     if (slug) {
       fetchSingleProduct();
     }
-  }, [slug , setCartResponse , cartResponse]);
+  }, [slug, setCartResponse, cartResponse]);
 
   const handleAddToCart = async (id) => {
     try {
-      const response = await postRequest("/product/add-to-cart", { productId: id });
-      setCartResponse(response)
+      const response = await postRequest("/product/add-to-cart", {
+        productId: id,
+      });
+      setCartResponse(response);
       toast.success(response?.message || "Item added to cart successfully!");
     } catch (error) {
       toast.error("Failed to add item to cart");
@@ -73,8 +96,7 @@ const SingleProductOverview = () => {
 
       if (response.success) {
         toast.success("Deal confirmed!");
-        navigate('/user-dashboard/manage-deals')
-
+        navigate("/user-dashboard/manage-deals");
       } else {
         toast.error("Error creating deal.");
       }
@@ -119,7 +141,11 @@ const SingleProductOverview = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-yellow-500"></div>
+      </div>
+    );
   }
 
   if (error) {
@@ -128,7 +154,7 @@ const SingleProductOverview = () => {
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto px-4 py-10 lg:py-16">
+      <div className="max-w-screen-xl mx-auto px-4 py-10 lg:py-16 mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Product Image Slider */}
           <div className="lg:col-span-7 shadow-xl rounded-lg overflow-hidden relative">
@@ -147,10 +173,98 @@ const SingleProductOverview = () => {
           </div>
 
           {/* Product Details */}
-          <div className="lg:col-span-5  rounded-lg p-8 flex flex-col justify-between relative overflow-hidden border border-blue-100 hover:border-blue-200 transition-all">
-            <div className="absolute top-0 left-0 w-20 h-20 bg-blue-600 opacity-20 rounded-br-full"></div>
-            <div className="absolute bottom-0 right-0 w-20 h-20 bg-blue-600 opacity-20 rounded-tl-full"></div>
+          <div className="lg:col-span-5  rounded-lg p-8 flex flex-col justify-between relative overflow-hidden border border-yellow-500 transition-all">
+            <div className="space-y-5">
+              <div>
+                <div className="bg-white px-6 py-4 rounded-lg">
+                  <div className="font-semibold text-lg">
+                    {" "}
+                    {singleProduct.title || "Product Title"}
+                  </div>
+                </div>
+              </div>
 
+              <div className="space-y-2">
+                <div className=" grid grid-cols-3 gap-2">
+                  <div className="bg-white rounded-lg p-3 text-center">
+                    <div className="font-semibold text-sm">RS</div>
+                    <div className="font-semibold text-base text-yellow-500">
+                      {singleProduct?.price}
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-lg p-3 text-center">
+                    <div className="font-semibold text-sm">Condition</div>
+                    <div className="font-semibold text-base capitalize  text-yellow-500">
+                      {singleProduct?.condition}
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-lg p-3 text-center">
+                    <div className="font-semibold text-sm">Weight</div>
+                    <div className="font-semibold text-base text-yellow-500">
+                      {singleProduct?.weight}g
+                    </div>
+                  </div>
+                  {/* <div className="bg-white rounded-lg p-3 text-center">
+                  <div className="font-semibold text-sm ">Category</div>
+                  <div className="font-semibold text-base text-yellow-500">{singleProduct?.category}</div>
+                </div> */}
+                </div>
+                <div className=" grid grid-cols-2 gap-2">
+                  <div className="bg-white rounded-lg p-3 text-center">
+                    <div className="font-semibold text-sm">Location</div>
+                    <div className="font-semibold text-base text-yellow-500">
+                      {singleProduct?.location}
+                    </div>
+                  </div>
+
+                  {singleProduct?.category && (
+                    <div className="bg-white rounded-lg p-3 text-center">
+                      <div className="font-semibold text-sm ">Category</div>
+                      <div className="font-semibold text-base text-yellow-500">
+                        {singleProduct?.category}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {singleProduct?.userId?.name && (
+                  <div className=" grid grid-cols-1 gap-2">
+                    <div className="bg-white rounded-lg px-6 py-3 text-start flex gap-2 items-center">
+                      <div className="font-semibold text-sm">
+                        Seller Details:
+                      </div>
+                      <div className="font-semibold text-base text-yellow-500">
+                        <span className="capitalize">
+                          {singleProduct?.userId?.name}
+                        </span>{" "}
+                        <span className="text-black">-</span>{" "}
+                        <Link
+                          to={`https://wa.me/${singleProduct?.userId?.phone}`}
+                          className="capitalize cursor-pointer"
+                        >
+                          {singleProduct?.userId?.phone}
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <button
+                onClick={() =>
+                  handleBookNowClick(singleProduct?.userId, singleProduct?._id)
+                }
+                className="w-full  bg-yellow-600 hover:opacity-90 text-white font-bold py-4 rounded-lg text-lg flex items-center justify-center gap-2  transform transition-transform"
+              >
+                <AiOutlineShoppingCart size={24} /> Book Now
+              </button>
+            </div>
+
+            {/* <div className="absolute top-0 left-0 w-20 h-20 bg-blue-600 opacity-20 rounded-br-full"></div>
+            <div className="absolute bottom-0 right-0 w-20 h-20 bg-blue-600 opacity-20 rounded-tl-full"></div> */}
+            {/* 
             <div className="mb-6 z-10">
               <h1 className="text-2xl font-bold mb-4 text-gray-900 leading-tight">
                 {singleProduct.title || "Product Title"}
@@ -179,17 +293,17 @@ const SingleProductOverview = () => {
               <p className="text-md text-gray-600 mb-6 leading-relaxed">
                 Phone: {singleProduct?.userId?.phone}
               </p>
-            </div>
+            </div> */}
 
             <div className="z-10 flex justify-between space-x-10">
-              <button
+              {/* <button
                 onClick={() =>
                   handleBookNowClick(singleProduct?.userId, singleProduct?._id)
                 }
                 className="w-full  bg-yellow-600 text-white font-bold py-4 rounded-lg text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-2xl transform transition-transform hover:scale-105"
               >
                 <AiOutlineShoppingCart size={24} /> Book Now
-              </button>
+              </button> */}
               {/* <button
                 className="w-full  bg-yellow-600 text-white font-bold py-4 rounded-lg text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-2xl transform transition-transform hover:scale-105"
                onClick={() => 
@@ -201,6 +315,24 @@ const SingleProductOverview = () => {
 
               </button> */}
             </div>
+          </div>
+        </div>
+
+        {/* product Description */}
+        <div className="mt-16">
+          <h2 className="text-2xl text-gray-800 relative">Description</h2>
+          <div className="bg-white px-4 py-2 mt-3 text-sm rounded">
+            <p>
+              {isExpanded ? description : `${description.substring(0, 500)}...`}
+              <span>
+                <button
+                  onClick={handleToggle}
+                  className="mt-2 text-yellow-500 focus:outline-none"
+                >
+                  {isExpanded ? "See Less" : "See More"}
+                </button>
+              </span>
+            </p>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ export default function ProductCard({ item }) {
 
   return (
     <>
-      <div className="relative border w-[140px] md:w-[180px] xl:w-[220px] shadow-md transition-shadow hover:shadow-lg overflow-hidden">
+      <div className="bg-[#ffffff] relative border w-[140px] md:w-[180px] xl:w-[220px]  transition-shadow hover:shadow-productCardShadow overflow-hidden group">
         {/* Wishlist Icon - Positioned in the top-right corner */}
         <div className="absolute top-2 right-2 z-10">
           <button
@@ -43,12 +43,12 @@ export default function ProductCard({ item }) {
           </button>
         </div>
 
-        <Link to={`/${item.slug}`}>
+        <Link to={`/${item?.slug}`}>
           <div className="relative overflow-hidden">
             {item?.images[0] && (
               <img
                 src={item?.images[0] || `/assets/images/alt-img.webp`}
-                className="w-full h-[140px] md:h-[170px] xl:h-[200px] object-cover transition-transform duration-500 ease-in-out hover:scale-105"
+                className="w-full h-[140px] md:h-[170px] xl:h-[200px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                 alt={item.name}
               />
             )}
