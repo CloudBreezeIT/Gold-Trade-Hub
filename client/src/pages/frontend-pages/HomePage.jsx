@@ -38,8 +38,8 @@ export default function HomePage() {
   return (
     <>
       <MainHeroSection />
-      <CategoriesSection data={categories} />
       <FeaturedProductsSection />
+      <CategoriesSection data={categories} />
       <FullSet />
       <TopProductsSection homeData={homeProducts} />
       <Footer />

@@ -34,11 +34,10 @@ export default function ProductCard({ item }) {
             className="focus:outline-none"
           >
             <FiHeart
-              className={`w-6 h-6 ${
-                isWishlisted
+              className={`w-6 h-6 ${isWishlisted
                   ? "text-yellow-500 fill-yellow-500"
                   : "text-yellow-500"
-              } cursor-pointer`}
+                } cursor-pointer`}
             />
           </button>
         </div>
@@ -73,8 +72,13 @@ export default function ProductCard({ item }) {
           </div>
 
           <div className="flex justify-between items-center mt-1">
-            <div className="text-base md:text-lg font-normal text-yellow-500">
-              Rs. {item.price > 100000 ? formatNumber(item.price) : item.price}
+            <div>
+              <div className="text-base md:text-lg font-normal text-yellow-500">
+                Rs. {item.price > 100000 ? formatNumber(item.price) : item.price}
+              </div>
+              <div className="text-[8px] md:text-[9px] xl:text-[13px] text-gray-700">
+                Rs. {(item.price)/(item.weight)} / tola
+              </div>
             </div>
             <div className="flex flex-col items-end text-[8px] md:text-[9px] xl:text-[10px] text-gray-600">
               <span className="font-medium">Condition: {item.condition}</span>
