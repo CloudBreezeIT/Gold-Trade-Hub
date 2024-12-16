@@ -80,7 +80,7 @@ const Navbar = () => {
               to={token ? '/user-dashboard' : '/user-onboarding'}
               className="text-gray-700 hover:text-yellow-500 transition duration-300"
             >
-              {token ? userDetails?.name : 'Login'}
+              {token ? (userDetails?.name ? userDetails.name : "Guest") : 'Login'}
             </Link>
             <button
               onClick={() => setIsCartOpen(true)}

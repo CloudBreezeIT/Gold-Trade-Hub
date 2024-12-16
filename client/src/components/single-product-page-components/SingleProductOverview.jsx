@@ -95,7 +95,7 @@ const SingleProductOverview = () => {
       });
 
       if (response.success) {
-        toast.success("Deal confirmed!");
+        toast.success("Deal confirmed! Our Agent Will Contact You Soon Please Alert");
         navigate("/user-dashboard/manage-deals");
       } else {
         toast.error("Error creating deal.");
@@ -211,23 +211,40 @@ const SingleProductOverview = () => {
                 </div>
                 <div className=" grid grid-cols-2 gap-2">
                   <div className="bg-white rounded-lg p-3 text-center">
-                    <div className="font-semibold text-sm">Location</div>
+                    <div className="font-semibold text-sm">Type</div>
                     <div className="font-semibold text-base text-yellow-500">
-                      {singleProduct?.location}
+                      {singleProduct?.metalType}
                     </div>
                   </div>
+               { singleProduct.metalType == "Gold" &&  (
+                  <div className="bg-white rounded-lg p-3 text-center">
+                  <div className="font-semibold text-sm">Karatage</div>
+                  <div className="font-semibold text-base text-yellow-500">
+                    {singleProduct?.karatage}k
+                  </div>
+                </div>
+               )        
+                  }
 
                   {singleProduct?.category && (
+                 <>
                     <div className="bg-white rounded-lg p-3 text-center">
                       <div className="font-semibold text-sm ">Category</div>
                       <div className="font-semibold text-base text-yellow-500">
                         {singleProduct?.category}
                       </div>
                     </div>
+                    <div className="bg-white rounded-lg p-3 text-center">
+                      <div className="font-semibold text-sm ">Location</div>
+                      <div className="font-semibold text-base text-yellow-500">
+                        {singleProduct?.location}
+                      </div>
+                    </div>
+                 </>
                   )}
                 </div>
 
-                {singleProduct?.userId?.name && (
+                {singleProduct && (
                   <div className=" grid grid-cols-1 gap-2">
                     <div className="bg-white rounded-lg px-6 py-3 text-start flex gap-2 items-center">
                       <div className="font-semibold text-sm">

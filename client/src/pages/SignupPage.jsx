@@ -30,7 +30,6 @@ export default function SignupPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
     const phoneRegex = /^[0-9]{11}$/; // Adjust phone validation as needed
     if (name === "" || phone === "" || password === "") {
       toast.error("Please Fill All the Fields ...");

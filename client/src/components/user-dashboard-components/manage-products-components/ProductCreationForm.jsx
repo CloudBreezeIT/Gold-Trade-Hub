@@ -59,8 +59,13 @@ export default function ProductCreationForm() {
     { value: "Diamond", label: "Diamond" },
   ];
   const karatOptions = [
-    { value: "18", label: "18k" },
-    { value: "22", label: "22k" },
+    { value: "18", label: "10k" },
+    { value: "22", label: "12k" },
+    { value: "24", label: "14k" },
+    { value: "22", label: "18k" },
+    { value: "24", label: "20k" },
+    { value: "24", label: "21k" },
+    { value: "24", label: "22k" },
     { value: "24", label: "24k" },
   ];
   // const sellingTypeOptions = [
